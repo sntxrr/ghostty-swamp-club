@@ -1,0 +1,58 @@
+name: lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: shellcheck install.sh
+        run: shellcheck -S style install.sh
+
+      - name: theme file is well-formed
+        run: |
+          python3 - <<'PY'
+          import re
+          keys, palette = {}, {}
+          for line in open("themes/swamp-club"):
+              line = line.strip()
+              if not line or line.startswith("#"):
+                  continue
+              k, _, v = (p.strip() for p in line.partition("="))
+              assert _ == "=", f"bad line: {line!r}"
+              if k == "palette":
+                  i, _, hexv = v.partition("=")
+                  palette[int(i)] = hexv
+              else:
+                  keys[k] = v
+          assert sorted(palette) == list(range(16)), f"palette slots: {sorted(palette)}"
+          for k in ("background", "foreground", "cursor-color", "cursor-text",
+                    "selection-background", "selection-foreground"):
+              assert k in keys, f"missing {k}"
+          for v in list(palette.values()) + list(keys.values()):
+              assert re.fullmatch(r"#[0-9a-f]{6}", v), f"not #rrggbb: {v}"
+          # A theme file can set any option; keep this one to colors only.
+          allowed = {"background", "foreground", "cursor-color", "cursor-text",
+                     "selection-background", "selection-foreground", "split-divider-color"}
+          assert set(keys) <= allowed, f"unexpected keys: {set(keys) - allowed}"
+          print(f"ok: 16 palette slots, {len(keys)} color options, all hex")
+          PY
+
+      - name: install.sh replaces an existing theme line and keeps the rest
+        run: |
+          set -euo pipefail
+          export XDG_CONFIG_HOME="$(mktemp -d)"
+          mkdir -p "$XDG_CONFIG_HOME/ghostty"
+          printf 'font-family = Iosevka\ntheme = Dracula\ncopy-on-select = clipboard\n' > "$XDG_CONFIG_HOME/ghostty/config"
+          ./install.sh
+          cmp themes/swamp-club "$XDG_CONFIG_HOME/ghostty/themes/swamp-club"
+          test "$(grep -c '^theme' "$XDG_CONFIG_HOME/ghostty/config")" = 1
+          grep -qx 'theme = swamp-club' "$XDG_CONFIG_HOME/ghostty/config"
+          grep -qx 'font-family = Iosevka' "$XDG_CONFIG_HOME/ghostty/config"
+          grep -qx 'copy-on-select = clipboard' "$XDG_CONFIG_HOME/ghostty/config"
+          echo "ok"
