@@ -1,8 +1,8 @@
 # Swamp Club — a theme for [Ghostty](https://ghostty.org)
 
-Bioluminescent swamp at night: pitch-black water, a neon-green cursor and
-bright-green, and magenta and cyan will-o'-the-wisps for the rest of the
-palette.
+The [swamp-club.com](https://swamp-club.com) palette in your terminal: a
+black canvas, neutral gray text, the site's green accent, a `#39ff14` neon
+cursor and bright-green, and the cyan and magenta of the logo's glitch.
 
 ![Ghostty running the Swamp Club theme](screenshots/ghostty.png)
 
@@ -67,26 +67,45 @@ wrote), delete `~/.config/ghostty/themes/swamp-club`, and reload.
 
 | slot | normal | bright |
 |---|---|---|
-| black | `#121a12` | `#6b8a6e` |
-| red | `#ff003c` | `#ff4d6d` |
-| green | `#4ade80` | **`#39ff14`** |
+| black | `#1a1a1a` | `#6b7280` |
+| red | `#ff003c` | `#f87171` |
+| green | `#05df72` | **`#39ff14`** |
 | yellow | `#fde047` | `#fef08a` |
 | blue | `#60a5fa` | `#93c5fd` |
 | magenta | `#e879f9` | `#f0abfc` |
-| cyan | `#22d3ee` | `#67e8f9` |
-| white | `#d6ead0` | `#f0f7ec` |
+| cyan | `#00d3f2` | `#67e8f9` |
+| white | `#d1d5db` | `#ffffff` |
 
 | | |
 |---|---|
-| background | `#080a08` |
-| foreground | `#d6ead0` |
-| cursor | `#39ff14` on `#080a08` |
-| selection | `#d6ead0` on `#1c3322` |
-| split divider | `#3d5240` |
+| background | `#080808` |
+| foreground | `#d1d5db` |
+| cursor | `#39ff14` on `#080808` |
+| selection | `#d1d5db` on `#062e16` |
+| split divider | `#06411e` |
 
-Bright green is the neon on purpose: it's what `ls`, git and most prompts
-reach for to mark success and highlights, so the glow shows up in everyday
-output while the normal green stays readable in bulk.
+Every color is taken from swamp-club.com as it renders, not guessed from a
+screenshot:
+
+- **Canvas and text** are the site's: `#080808` panels, `#d1d5db` body text,
+  `#fff` headings. No green tint -- the site keeps its neutrals neutral and
+  lets the neon do the work.
+- **Green** (`#05df72`) is the site's accent text color (Tailwind v4
+  green-400), the most-used color on the page after the grays.
+- **Bright green** (`#39ff14`) is the site's glow, scanline and input-caret
+  neon. It's in the bright slot on purpose: it's what `ls`, git and most
+  prompts reach for to mark success, so the glow shows up in everyday output
+  while the normal green stays readable in bulk. The cursor is the same neon,
+  as it is in the site's input fields.
+- **Cyan** (`#00d3f2`) is the logo and the event counter; **magenta**
+  (`#e879f9`) is the site's default profile accent; **red** (`#ff003c`) is its
+  neon glitch.
+- **Selection and divider** are the site's green-500 borders at 20% and 30%,
+  flattened onto the background.
+
+The site sets its text in [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
+(`font-family = JetBrains Mono` in your Ghostty config) if you want the full
+look.
 
 ## Tweaks
 
@@ -97,12 +116,14 @@ config wins over the theme. The knob people ask about first:
   tools use for dim text. Override it in your config:
 
   ```
-  palette = 8=#7f9c82
+  palette = 8=#9ca3af
   ```
+
+  `#9ca3af` is the site's own muted-text gray.
 
 ## Notes
 
 - Tested on Ghostty 1.3. Any 1.x release with the `theme` option should work.
-- The palette is borrowed, with affection, from [swamp.club](https://swamp.club).
+- The palette is borrowed, with affection, from [swamp-club.com](https://swamp-club.com).
   This project is not affiliated with Swamp Club, Inc.
 - MIT licensed.
