@@ -1,0 +1,32 @@
+# Swamp Club -- the swamp-club.com palette for Ghostty.
+# https://github.com/sntxrr/ghostty-swamp-club
+# Companion to the herdr theme at https://github.com/sntxrr/herdr-swamp-club.
+# Colors measured from swamp-club.com: black canvas, neutral gray text, the
+# green-400 accent, #39ff14 neon glow, cyan / magenta glitch.
+
+# normal
+palette = 0=#1a1a1a
+palette = 1=#ff003c
+palette = 2=#05df72
+palette = 3=#fde047
+palette = 4=#60a5fa
+palette = 5=#e879f9
+palette = 6=#00d3f2
+palette = 7=#d1d5db
+# bright -- bright green is the swamp-club.com neon
+palette = 8=#6b7280
+palette = 9=#f87171
+palette = 10=#39ff14
+palette = 11=#fef08a
+palette = 12=#93c5fd
+palette = 13=#f0abfc
+palette = 14=#67e8f9
+palette = 15=#ffffff
+
+background = #080808
+foreground = #d1d5db
+cursor-color = #39ff14
+cursor-text = #080808
+selection-background = #062e16
+selection-foreground = #d1d5db
+split-divider-color = #06411e
